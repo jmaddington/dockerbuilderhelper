@@ -295,14 +295,11 @@ def main():
     
     # Run an interactive shell in the container if specified
     if env_config.get('interactive', False):
-        container_name = env_config.get('container')
-        if not container_name:
+        container = env_config.get('container')
+        if not container:
             logging.error("Interactive mode requested, but 'container' key is missing in the configuration.")
             sys.exit(1)
-        
-        container_id = find_container_by_name(container_name)
-        if container_id:
-            subprocess.run(['docker', 'exec', '-ti', container_id, 'bash'], check=True)
+        subprocess.run(['docker', 'exec', '-ti', container, 'bash'], check=True)
 
 if __name__ == "__main__":
     main()
