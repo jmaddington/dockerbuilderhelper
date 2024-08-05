@@ -74,7 +74,11 @@ def build_image(env_config):
 
     :param env_config: Environment configuration dictionary
     """
-    build_command = ['docker', 'build', '-f', env_config.get('dockerfile', 'Dockerfile')]
+    dockerfile = env_config.get('dockerfile', 'Dockerfile')
+    if not os.path.exists(dockerfile):
+        raise FileNotFoundError(f"Dockerfile {dockerfile} not found")
+    
+    build_command = ['docker', 'build', '-f', dockerfile]
     if 'buildargs' in env_config:
         for arg in env_config['buildargs']:
             build_command.extend(['--build-arg', arg])
