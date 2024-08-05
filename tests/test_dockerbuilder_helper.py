@@ -137,7 +137,7 @@ class TestDockerBuilderHelper(unittest.TestCase):
         mock_subprocess_run.assert_any_call('echo post-build', shell=True, check=True)
 
     @patch('subprocess.run')
-    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    interactive: true\n    container: test-container\n')
+    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    buildargs: ["BUILD_ENV=test"]\n    interactive: true\n    container: test-container\n')
     def test_interactive_mode(self, mock_file, mock_subprocess_run):
         """
         Test handling of interactive mode.
