@@ -68,11 +68,12 @@ def health_checks():
     return check_docker_compose()
 
 # Function to build the Docker image
-def build_image(env_config):
+def build_image(env_config, no_cache):
     """
     Build the Docker image based on the environment configuration.
 
     :param env_config: Environment configuration dictionary
+    :param no_cache: Boolean indicating whether to use the --no-cache flag
     """
     dockerfile = env_config.get('dockerfile', 'Dockerfile')
     if not os.path.exists(dockerfile):
@@ -86,6 +87,8 @@ def build_image(env_config):
             raise KeyError(f"Required environment variable {var} not found in build arguments")
     
     build_command = ['docker', 'build', '-f', dockerfile]
+    if no_cache:
+        build_command.append('--no-cache')
     if 'buildargs' in env_config:
         for arg in env_config['buildargs']:
             build_command.extend(['--build-arg', arg])
@@ -101,7 +104,6 @@ def build_image(env_config):
     
     logging.debug(f"Build command: {' '.join(build_command)}")
     subprocess.run(build_command, check=True)
-
 
 # Function to run Docker Compose
 def run_compose(env_config, compose_command):
@@ -199,7 +201,8 @@ def main():
     if 'pre_build' in env_config:
         execute_commands(env_config['pre_build'])
     
-    build_image(env_config)
+    no_cache = args.no_cache or env_config.get('no_cache', False)
+    build_image(env_config, no_cache)
     
     if not args.buildonly and not env_config.get('buildonly', False):
         run_compose(env_config, compose_command)

@@ -33,6 +33,7 @@ and each section can have the following:
 - `interactive` (optional): Whether to run `docker exec -ti <container> bash` after running the compose file. Defaults to `true`. Requires the `container` field to be set.
 - `pre_build` (optional): A list of commands to run before building the image.
 - `post_build` (optional): A list of commands to run after building the image.
+- `no_cache` (optional): Whether to build the image with the `--no-cache` flag. Defaults to `false`.
 - `logging` (optional): Specifies a log levels and file to log to. Defaults to `info` and `dockerbuilder.log`.
 
 
