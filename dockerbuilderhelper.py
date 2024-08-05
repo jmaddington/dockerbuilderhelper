@@ -162,10 +162,12 @@ def main():
         else:
             print(f"Environment {args.remove} not found.")
         return
-    
+
+    # Test for non-existent environment    
     if args.environment not in config['environments']:
         print(f"Environment {args.environment} not found.")
-        sys.exit(1)  # Ensure sys.exit() is called when the environment is not found
+        sys.exit(1)
+        return
 
     env_config = config['environments'][args.environment]
 

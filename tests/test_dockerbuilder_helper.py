@@ -123,7 +123,7 @@ class TestDockerBuilderHelper(unittest.TestCase):
         Test handling of missing environment in the configuration file.
         """
         with patch('sys.exit') as mock_exit:
-            with patch('sys.argv', ['dockerbuilder-helper.py', 'nonexistent']):
+            with patch('sys.argv', ['dockerbuilder-helper.py', 'nonexistent-environment']):
                 main()
             mock_exit.assert_called_once_with(1)
 
