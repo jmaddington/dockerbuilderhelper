@@ -78,6 +78,13 @@ def build_image(env_config):
     if not os.path.exists(dockerfile):
         raise FileNotFoundError(f"Dockerfile {dockerfile} not found")
     
+    # Check for required environment variables
+    required_env_vars = ['BUILD_ENV']
+    buildargs = {arg.split('=')[0]: arg.split('=')[1] for arg in env_config.get('buildargs', [])}
+    for var in required_env_vars:
+        if var not in buildargs:
+            raise KeyError(f"Required environment variable {var} not found in build arguments")
+    
     build_command = ['docker', 'build', '-f', dockerfile]
     if 'buildargs' in env_config:
         for arg in env_config['buildargs']:
@@ -94,6 +101,7 @@ def build_image(env_config):
     
     logging.debug(f"Build command: {' '.join(build_command)}")
     subprocess.run(build_command, check=True)
+
 
 # Function to run Docker Compose
 def run_compose(env_config, compose_command):
