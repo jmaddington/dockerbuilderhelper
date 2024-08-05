@@ -125,7 +125,7 @@ class TestDockerBuilderHelper(unittest.TestCase):
             mock_exit.assert_called_once_with(1)
 
     @patch('subprocess.run')
-    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    pre_build: ["echo pre-build"]\n    post_build: ["echo post-build"]\n')
+    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    buildargs: ["BUILD_ENV=test"]\n    pre_build: ["echo pre-build"]\n    post_build: ["echo post-build"]\n')
     def test_pre_post_build_commands(self, mock_file, mock_subprocess_run):
         """
         Test execution of pre-build and post-build commands.
