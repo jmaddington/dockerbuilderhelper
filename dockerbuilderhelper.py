@@ -99,11 +99,19 @@ def run_compose(env_config, compose_command):
     :param env_config: Environment configuration dictionary
     :param compose_command: List of command parts to use for Docker Compose
     """
-    compose_command.extend(['-f', env_config.get('composefile', 'docker-compose.yml')])
+    compose_file = env_config.get('composefile', 'docker-compose.yml')
+    if not os.path.exists(compose_file):
+        raise FileNotFoundError(f"Compose file {compose_file} not found")
+    
+    compose_command.extend(['-f', compose_file])
     if 'composeargs' in env_config:
         for arg, value in env_config['composeargs'].items():
             compose_command.extend([arg, value])
     compose_command.append('up')
+    
+    logging.debug(f"Compose command: {' '.join(compose_command)}")
+    subprocess.run(compose_command, check=True)
+
     
     logging.debug(f"Compose command: {' '.join(compose_command)}")
     subprocess.run(compose_command, check=True)
