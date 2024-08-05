@@ -148,7 +148,7 @@ class TestDockerBuilderHelper(unittest.TestCase):
         mock_subprocess_run.assert_any_call(['docker', 'exec', '-ti', 'test-container', 'bash'], check=True)
 
     @patch('subprocess.run')
-    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n')
+    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    buildargs: ["BUILD_ENV=test"]\n')
     def test_command_line_arguments(self, mock_file, mock_subprocess_run):
         """
         Test handling of various command-line arguments.
@@ -156,10 +156,10 @@ class TestDockerBuilderHelper(unittest.TestCase):
         mock_subprocess_run.return_value = MagicMock(returncode=0)
         with patch('sys.argv', ['dockerbuilder-helper.py', 'test', '--no-cache']):
             main()
-            mock_subprocess_run.assert_called()
+        mock_subprocess_run.assert_called()
 
     @patch('subprocess.run')
-    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    tag: test:latest\n')
+    @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    buildargs: ["BUILD_ENV=test"]\n    tag: test:latest\n')
     def test_build_only_mode(self, mock_file, mock_subprocess_run):
         """
         Test handling of build-only mode.
@@ -171,7 +171,7 @@ class TestDockerBuilderHelper(unittest.TestCase):
         expected_calls = [
             call(['docker', '--version'], check=True),
             call(['docker-compose', '--version'], check=True, stdout=-1, stderr=-1),
-            call(['docker', 'build', '-f', 'Dockerfile', '-t', 'test:latest', '.'], check=True)
+            call(['docker', 'build', '-f', 'Dockerfile', '--build-arg', 'BUILD_ENV=test', '-t', 'test:latest', '.'], check=True)
         ]
         mock_subprocess_run.assert_has_calls(expected_calls)
 
