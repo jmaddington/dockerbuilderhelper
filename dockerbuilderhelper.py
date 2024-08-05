@@ -136,7 +136,7 @@ def run_compose(env_config, compose_command):
     if 'composeargs' in env_config:
         for arg, value in env_config['composeargs'].items():
             compose_command.extend([arg, value])
-    compose_command.append('up')
+    compose_command.extend(['up', '-d'])  # Add the '-d' flag for detached mode
     
     logging.debug(f"Compose command: {' '.join(compose_command)}")
     try:
@@ -270,7 +270,11 @@ def main():
     
     # Run an interactive shell in the container if specified
     if env_config.get('interactive', False):
-        subprocess.run(['docker', 'exec', '-ti', env_config['container'], 'bash'], check=True)
+        container = env_config.get('container')
+        if not container:
+            logging.error("Interactive mode requested, but 'container' key is missing in the configuration.")
+            sys.exit(1)
+        subprocess.run(['docker', 'exec', '-ti', container, 'bash'], check=True)
 
 if __name__ == "__main__":
     main()
