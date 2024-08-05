@@ -26,6 +26,10 @@ def setup_logging(level, file):
     :param level: Logging level (e.g., 'info', 'debug')
     :param file: File to log to
     """
+    for handler in logging.root.handlers[:]:
+        logging.root.removeHandler(handler)
+        handler.close()
+
     logging.basicConfig(level=getattr(logging, level.upper(), None),
                         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                         handlers=[
