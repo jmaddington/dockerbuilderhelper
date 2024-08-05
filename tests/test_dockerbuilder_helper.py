@@ -229,28 +229,28 @@ class TestDockerBuilderHelper(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError):
             push_image(env_config)
 
-@patch('logging.FileHandler')
-@patch('logging.StreamHandler')
-@patch('logging.basicConfig')
-def test_logging_configuration(self, mock_basic_config, mock_stream_handler, mock_file_handler):
-    """
-    Test setting up logging configuration.
-    """
-    setup_logging('debug', 'test.log')
-    
-    # Check that basicConfig was called with the correct level and format
-    mock_basic_config.assert_called_once_with(
-        level=logging.DEBUG,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            mock_file_handler.return_value,
-            mock_stream_handler.return_value
-        ]
-    )
-    
-    # Ensure the handlers are created with the correct parameters
-    mock_file_handler.assert_called_once_with('test.log', mode='a')
-    mock_stream_handler.assert_called_once()
+    @patch('logging.FileHandler')
+    @patch('logging.StreamHandler')
+    @patch('logging.basicConfig')
+    def test_logging_configuration(self, mock_basic_config, mock_stream_handler, mock_file_handler):
+        """
+        Test setting up logging configuration.
+        """
+        setup_logging('debug', 'test.log')
+        
+        # Check that basicConfig was called with the correct level and format
+        mock_basic_config.assert_called_once_with(
+            level=logging.DEBUG,
+            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            handlers=[
+                mock_file_handler.return_value,
+                mock_stream_handler.return_value
+            ]
+        )
+        
+        # Ensure the handlers are created with the correct parameters
+        mock_file_handler.assert_called_once_with('test.log', mode='a')
+        mock_stream_handler.assert_called_once()
 
 
 if __name__ == '__main__':
