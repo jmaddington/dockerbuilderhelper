@@ -1,0 +1,6 @@
+services:
+  hello-world:
+    image: hello-world:production
+    container_name: hello-world-production
+    environment:
+      - BUILD_ENV=production

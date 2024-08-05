@@ -1,0 +1,63 @@
+environments:
+  production:
+    name: production
+    tag: hello-world:production
+    dockerfile: Dockerfile
+    composefile: docker-compose.yml
+    envfile: .env.production
+    buildargs:
+      - BUILD_ENV=production
+    platform:
+      - linux/amd64
+    push: true
+    registry: myregistry.com
+    buildonly: false
+    interactive: false
+    pre_build:
+      - echo "Running pre-build script for production"
+    post_build:
+      - echo "Running post-build script for production"
+    logging:
+      level: debug
+      file: ./dockerbuilderhelper.log
+
+  development:
+    name: development
+    tag: hello-world:development
+    dockerfile: Dockerfile
+    composefile: docker-compose.dev.yml
+    envfile: .env.development
+    buildargs:
+      - BUILD_ENV=development
+    platform:
+      - linux/amd64
+    buildonly: false
+    interactive: false
+    pre_build:
+      - echo "Running pre-build script for development"
+    post_build:
+      - echo "Running post-build script for development"
+    logging:
+      level: debug
+      file: ./dockerbuilderhelper.log
+
+
+  development-macOS:
+    name: development
+    tag: hello-world:development
+    dockerfile: Dockerfile
+    composefile: docker-compose.dev.yml
+    envfile: .env.development
+    buildargs:
+      - BUILD_ENV=development
+    platform:
+      - linux/arm64/v8
+    buildonly: false
+    interactive: false
+    pre_build:
+      - echo "Running pre-build script for development"
+    post_build:
+      - echo "Running post-build script for development"
+    logging:
+      level: debug
+      file: ./dockerbuilderhelper.log

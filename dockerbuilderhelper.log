@@ -1,0 +1,41 @@
+2024-08-05 12:24:30,061 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:24:30,068 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:26:32,066 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:26:32,071 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:26:34,651 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:26:52,009 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:26:52,014 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:26:54,153 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:28:23,361 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:28:23,366 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:28:25,689 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:30:17,487 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:30:17,495 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/arm64/v8 -t hello-world:development .
+2024-08-05 12:30:18,931 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:31:26,682 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:31:26,687 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:31:27,353 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:33:02,197 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:33:02,203 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:33:04,532 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:33:04,787 - root - DEBUG - Executing command: echo "Running post-build script for development"
+2024-08-05 12:33:44,981 - root - DEBUG - Executing command: echo "Running pre-build script for production"
+2024-08-05 12:33:44,986 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=production --platform linux/amd64 -t hello-world:production .
+2024-08-05 12:33:45,969 - root - DEBUG - Compose command: docker compose -f docker-compose.yml up
+2024-08-05 12:33:46,247 - root - DEBUG - Push command: docker push myregistry.com/hello-world:production
+2024-08-05 12:34:53,168 - root - DEBUG - Executing command: echo "Running pre-build script for production"
+2024-08-05 12:34:53,174 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=production --platform linux/amd64 -t myregistry.com/hello-world:production .
+2024-08-05 12:34:54,308 - root - DEBUG - Compose command: docker compose -f docker-compose.yml up
+2024-08-05 12:34:54,599 - root - DEBUG - Push command: docker push myregistry.com/hello-world:production
+2024-08-05 12:36:45,087 - root - DEBUG - Executing command: echo "Running pre-build script for production"
+2024-08-05 12:36:45,094 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=production --platform linux/amd64 -t myregistry.com/hello-world:production .
+2024-08-05 12:36:47,605 - root - DEBUG - Compose command: docker compose -f docker-compose.yml up
+2024-08-05 12:36:47,845 - root - DEBUG - Push command: docker push myregistry.com/hello-world:production
+2024-08-05 12:36:53,954 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:36:53,961 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/amd64 -t hello-world:development .
+2024-08-05 12:36:54,586 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:36:54,848 - root - DEBUG - Executing command: echo "Running post-build script for development"
+2024-08-05 12:36:58,404 - root - DEBUG - Executing command: echo "Running pre-build script for development"
+2024-08-05 12:36:58,409 - root - DEBUG - Build command: docker build -f Dockerfile --build-arg BUILD_ENV=development --platform linux/arm64/v8 -t hello-world:development .
+2024-08-05 12:36:58,954 - root - DEBUG - Compose command: docker compose -f docker-compose.dev.yml up
+2024-08-05 12:36:59,264 - root - DEBUG - Executing command: echo "Running post-build script for development"

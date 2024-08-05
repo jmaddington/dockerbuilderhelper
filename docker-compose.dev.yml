@@ -1,0 +1,6 @@
+services:
+  hello-world:
+    image: hello-world:development
+    container_name: hello-world-development
+    environment:
+      - BUILD_ENV=development
