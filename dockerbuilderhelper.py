@@ -6,7 +6,32 @@ import yaml
 import os
 import sys
 import logging
+import subprocess
 
+def find_container_by_name(container_name):
+    """
+    Find a running container by name.
+
+    :param container_name: The name of the container to find
+    :return: The ID of the matching container, or None if not found
+    """
+    try:
+        result = subprocess.run(['docker', 'ps', '--format', '{{.ID}} {{.Names}}'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        containers = result.stdout.decode().strip().split('\n')
+        matching_containers = [line.split()[0] for line in containers if container_name in line.split()[1]]
+        
+        if len(matching_containers) > 1:
+            logging.error(f"Multiple containers found matching the name '{container_name}'.")
+            sys.exit(1)
+        elif len(matching_containers) == 0:
+            logging.error(f"No running container found matching the name '{container_name}'.")
+            sys.exit(1)
+        else:
+            return matching_containers[0]
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Failed to list running containers: {e.stderr.decode()}")
+        sys.exit(1)
+        
 # Function to load the configuration file
 def load_config(file_path='dockerbuilder.yml'):
     """
@@ -270,11 +295,14 @@ def main():
     
     # Run an interactive shell in the container if specified
     if env_config.get('interactive', False):
-        container = env_config.get('container')
-        if not container:
+        container_name = env_config.get('container')
+        if not container_name:
             logging.error("Interactive mode requested, but 'container' key is missing in the configuration.")
             sys.exit(1)
-        subprocess.run(['docker', 'exec', '-ti', container, 'bash'], check=True)
+        
+        container_id = find_container_by_name(container_name)
+        if container_id:
+            subprocess.run(['docker', 'exec', '-ti', container_id, 'bash'], check=True)
 
 if __name__ == "__main__":
     main()
