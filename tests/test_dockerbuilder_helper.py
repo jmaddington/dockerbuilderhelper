@@ -70,10 +70,7 @@ class TestDockerBuilderHelper(unittest.TestCase):
             'composeargs': {'-d': ''}
         }
         run_compose(env_config, ['docker-compose'])
-        mock_subprocess_run.assert_called_once()
-        self.assertIn('docker-compose', mock_subprocess_run.call_args[0][0])
-        self.assertIn('-f', mock_subprocess_run.call_args[0][0])
-        self.assertIn('up', mock_subprocess_run.call_args[0][0])
+        mock_subprocess_run.assert_called_once_with(['docker-compose', '-f', 'docker-compose.yml', '-d', '', 'up'], check=True)
 
     @patch('subprocess.run')
     def test_push_image(self, mock_subprocess_run):

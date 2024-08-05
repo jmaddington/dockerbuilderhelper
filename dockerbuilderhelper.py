@@ -124,10 +124,6 @@ def run_compose(env_config, compose_command):
     logging.debug(f"Compose command: {' '.join(compose_command)}")
     subprocess.run(compose_command, check=True)
 
-    
-    logging.debug(f"Compose command: {' '.join(compose_command)}")
-    subprocess.run(compose_command, check=True)
-
 # Function to push the Docker image
 def push_image(env_config):
     """
