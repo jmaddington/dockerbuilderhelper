@@ -5,6 +5,7 @@ import yaml
 import os
 import sys
 import logging
+import io
 
 # Add the parent directory to the Python path so that the module can be found
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -121,8 +122,9 @@ class TestDockerBuilderHelper(unittest.TestCase):
         """
         with patch('sys.exit') as mock_exit:
             with patch('sys.argv', ['dockerbuilder-helper.py', 'nonexistent-environment']):
-                main()
-            mock_exit.assert_called_once_with(1)
+                with patch('sys.stdout', new_callable=lambda: io.StringIO()) as mock_stdout:
+                    main()
+                mock_exit.assert_called_once_with(1)
 
     @patch('subprocess.run')
     @patch('builtins.open', new_callable=mock_open, read_data='environments:\n  test:\n    name: test\n    buildargs: ["BUILD_ENV=test"]\n    pre_build: ["echo pre-build"]\n    post_build: ["echo post-build"]\n')
