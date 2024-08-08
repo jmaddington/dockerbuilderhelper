@@ -15,6 +15,10 @@ def find_container_by_name(container_name):
     :param container_name: The name of the container to find
     :return: The ID of the matching container, or None if not found
     """
+    
+    # Change container_name to lowercase, as docker ps --format returns lowercase names
+    container_name = container_name.lower()
+    
     try:
         result = subprocess.run(['docker', 'ps', '--format', '{{.ID}} {{.Names}}'], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         containers = result.stdout.decode().strip().split('\n')
