@@ -110,13 +110,6 @@ def build_image(env_config, no_cache):
     if not os.path.exists(dockerfile):
         raise FileNotFoundError(f"Dockerfile {dockerfile} not found")
     
-    # Check for required environment variables
-    required_env_vars = ['BUILD_ENV']
-    buildargs = {arg.split('=')[0]: arg.split('=')[1] for arg in env_config.get('buildargs', [])}
-    for var in required_env_vars:
-        if var not in buildargs:
-            raise KeyError(f"Required environment variable {var} not found in build arguments")
-    
     # Construct the Docker build command
     build_command = ['docker', 'build', '-f', dockerfile]
     if no_cache:
