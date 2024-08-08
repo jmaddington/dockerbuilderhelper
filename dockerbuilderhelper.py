@@ -288,30 +288,15 @@ def main():
     
     # Run an interactive shell in the container if specified
     if env_config.get('interactive', False):
-        container = env_config.get('containername')
+        container = env_config.get('container')
+
         if not container:
             logging.error("Interactive mode requested, but 'container' key is missing in the configuration.")
             sys.exit(1)
-        
-        try:
-            # Get the list of running containers and filter by the specified container name
-            result = subprocess.run(['docker', 'ps', '--format', '{{.Names}}'], capture_output=True, text=True, check=True)
-            matching_containers = [line for line in result.stdout.splitlines() if container in line]
             
-            if len(matching_containers) > 1:
-                logging.error(f"Multiple containers found matching the name '{container}': {matching_containers}")
-                sys.exit(1)
-            elif len(matching_containers) == 0:
-                logging.error(f"No containers found matching the name '{container}'.")
-                sys.exit(1)
-            
-            # Use the matched container name to run the interactive shell
-            matched_container = matching_containers[0]
-            subprocess.run(['docker', 'exec', '-ti', matched_container, 'bash'], check=True)
+        container_id = find_container_by_name(container)
         
-        except subprocess.CalledProcessError as e:
-            logging.error(f"An error occurred while checking for containers: {e}")
-            sys.exit(1)
+        subprocess.run(['docker', 'exec', '-ti', container_id, 'bash'], check=True)
 
 if __name__ == "__main__":
     main()
